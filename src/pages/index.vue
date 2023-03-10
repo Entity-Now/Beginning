@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-       <BeginningEdit style="height:100px"/>
+       <BeginningEdit/>
     </div>
 </template>
 <script setup>
@@ -15,5 +15,7 @@ import BeginningEdit from '../components/BeginningEdit.vue'
 .container{
     width: 100%;
     min-height: 100%;
+    padding: 17px;
+    box-sizing: border-box;
 }
 </style>
