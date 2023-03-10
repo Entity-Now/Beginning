@@ -1,13 +1,18 @@
 <template>
-  <div>
     <router-view v-slot="{ Component }">
       <suspense>
-        <div>
-          <component :is="Component"></component>
-        </div>
+        <component :is="Component"></component>
       </suspense>
     </router-view>
-  </div>
 </template>
 <script setup>
+
 </script>
+<style lang="scss">
+html,body,#app{
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+</style>
