@@ -1,89 +1,43 @@
 <template>
     <div class="EditBox">
         <div class="header">
-            <div class="MarkDown icon-html">
-                <div class="tag">HTML5</div>
-            </div>
-            <div class="MarkDown icon-jiacu">
-                <div class="tag">粗体</div>
-            </div>
-            <div class="MarkDown icon-zitixieti">
-                <div class="tag">斜体</div>
-            </div>
-            <div class="MarkDown icon-zuoyouduiqi">
-                <div class="tag">居中</div>
-            </div>
-            <div class="MarkDown icon-liebiao">
-                <div class="tag">列表</div>
-            </div>
-            <div class="MarkDown icon-quote">
-                <div class="tag">引用</div>
-            </div>
-            <div class="MarkDown icon-zitidaxiao">
-                <div class="tag">size</div>
-            </div>
-            <div class="MarkDown icon-lianjie">
-                <div class="tag">链接</div>
-            </div>
-            <div class="MarkDown icon-tupian">
-                <div class="tag">图片</div>
-            </div>
-            <div class="MarkDown icon-shipin">
-                <div class="tag">视频</div>
-            </div>
-            <div class="MarkDown icon-a-daimakuai3x">
-                <div class="tag">源码</div>
-            </div>
-            <div class="MarkDown icon-kuozhan">
-                <div class="tag">放大</div>
+            <div v-for="item in Mk.toolBar"
+                 class="MarkDown" :class="item.Icon"
+                 @click="($event)=>Mk.handle(item)">
+                <div class="tag">{{ item.Name }}</div>
             </div>
         </div>
         <div class="content">
             <textarea
+                class="EditContent"
                 placeholder="请输入内容..."
-                class="EditContent"></textarea>
-            <div 
-                class="RenderHtml5"
-                contenteditable="true">
-            <div 
-                ref="RenderHtml"
                 @keyup.space="Click_Space"
-                @keyup.enter="enter"></div>
+                ref="EditHtml"></textarea>
+            <div v-if="IsCode"
+                class="RenderHtml5"
+                v-html="RenderHtml">
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue'
-import { CreateHighlight } from '../utils/CreateHighlight.js'
-import '../style/icon/MarkDown.css'
+import { ref, reactive, onMounted } from 'vue'
+import { BeginningEdit } from '../utils/CreateHighlight.js'
+import "../style/icon/MarkDown.css"
 
-// 渲染后的HTML5
+const IsCode = ref(false);
 const RenderHtml = ref(null);
-// 源代码
-const CodeSource = ref('');
-const SetCodeSource =(value)=>{
+const EditHtml = ref(null)
+const Mk = new BeginningEdit('# test');
+
+const ShowCode = ()=>{
+    RenderHtml.value = Mk.getRender;
+    IsCode.value = !IsCode.value;
 }
+onMounted(()=>{
+    Mk.init(EditHtml.value,ShowCode);
+})
 
-// markdown-it
-const Mk = CreateHighlight();
-
-// 显示源代码或者html，0 = 源代码 1 = html
-const Type = ref(0);
-
-// 点击空格键的时候渲染
-const Click_Space = ()=>{
-    // 获取空格处的元素
-    var selector = window.getSelection();
-
-}
-
-const enter = ()=>{
-    
-}
-// var result = Mk.render('*test');
-// console.log(Mk.parse(result));
-// console.log(result);
 </script>
 
 <style setup lang="scss">
@@ -150,6 +104,7 @@ const enter = ()=>{
                 width: 100%;
                 min-height: 200px;
                 min-width: 100%;
+                max-width: 100%;
                 box-sizing: border-box;
                 resize: both;
             }
@@ -164,7 +119,6 @@ const enter = ()=>{
                 background: $back-night;
                 box-sizing: border-box;
                 border: 1px solid $text-primary;
-                // display: none;
             }
         }
     }
