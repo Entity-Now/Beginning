@@ -1,0 +1,16 @@
+@import "public.scss";
+button{
+    min-width: 55px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid $text-primary;
+    border-radius: 4px;
+    transition: all .5s;
+    &:hover{
+        transition: all .5s;
+        cursor: pointer;
+        border: 1px solid $text-primary;
+        box-shadow: 0 0 10px 1px $text-primary;
+        color: $text-night-second;
+    }
+}

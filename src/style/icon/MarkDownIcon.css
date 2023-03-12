@@ -1,14 +1,18 @@
 @font-face {
-  font-family: "MarkDown"; /* Project id  */
-  src: url('MarkDown.ttf?t=1678450896847') format('truetype');
+  font-family: "MarkDownIcon"; /* Project id  */
+  src: url('MarkDownIcon.ttf?t=1678606436239') format('truetype');
 }
 
-.MarkDown {
-  font-family: "MarkDown" !important;
+.MarkDownIcon {
+  font-family: "MarkDownIcon" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-daimawenjian:before {
+  content: "\f01c6";
 }
 
 .icon-tupian:before {
@@ -23,8 +27,16 @@
   content: "\e62d";
 }
 
+.icon-15qingkong-1:before {
+  content: "\e680";
+}
+
 .icon-kuozhan:before {
   content: "\e620";
+}
+
+.icon-youxuliebiao:before {
+  content: "\e6f0";
 }
 
 .icon-shipin:before {
@@ -43,6 +55,10 @@
   content: "\ec87";
 }
 
+.icon-emoji:before {
+  content: "\e6f6";
+}
+
 .icon-jiacu:before {
   content: "\e608";
 }
@@ -53,10 +69,6 @@
 
 .icon-quote:before {
   content: "\e60c";
-}
-
-.icon-a-daimakuai3x:before {
-  content: "\e616";
 }
 
 .icon-zitidaxiao:before {

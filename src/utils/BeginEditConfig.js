@@ -1,9 +1,10 @@
+import { defineAsyncComponent } from 'vue'
 import MarkdownIt  from 'markdown-it'
 import hljs from 'highlight.js'
-import 'highlight.js/styles/github.css';
+import emoji from 'markdown-it-emoji/light'
 
 export function CreateHighlight(){
-    return new MarkdownIt({
+    let md = new MarkdownIt({
         html:true, // 支持html
         xhtmlOut: false, // 支持‘/’闭合标签 <br/>
         breaks: true, // 段落中的'\n'转换为换行符
@@ -11,33 +12,42 @@ export function CreateHighlight(){
         typographer:true, // 请用引号美化'‘’'
         quotes:'“”',
         highlight:function(str, lang){
-            if(lang && hljs.getLanguage(lang)){
+            if (lang && hljs.getLanguage(lang)) {
                 try {
-                    return hljs.highlight(str, { language: lang }).value;
+
+                    return '<pre class="hljs"><code>' +
+                            hljs.highlight(lang, str, true).value +
+                            '</code></pre>';
                 } catch (__) {}
             }
-            return '';
+          
+            return '<pre class="hljs"><code>' + md.utils.escapeHtml(str) + '</code></pre>';
         }
     });
+    // use
+    md.use(emoji);
+    return md
 }
 export class BeginningEdit{
     constructor(source){
         this.MkIt = CreateHighlight();
         this.Element = null;
-        this.showCode = null;
+        this.toolBarList = [];
         this.toolBar = [
-            { ID:1,Name:'HTML5',Icon:'icon-html'},
-            { ID:2,Name:'粗体',Icon:'icon-jiacu'},
-            { ID:3,Name:'斜体',Icon:'icon-zitixieti'},
-            { ID:4,Name:'列表',Icon:'icon-liebiao'},
-            { ID:5,Name:'引用',Icon:'icon-quote' },
-            { ID:6,Name:'字体大小',Icon:'icon-zitidaxiao'},
-            { ID:7,Name:'图片',Icon:'icon-tupian'},
-            { ID:8,Name:'视频',Icon:'icon-shipin' },
-            { ID:9,Name:'链接',Icon:'icon-lianjie'},
-            { ID:10,Name:'源码',Icon:'icon-a-daimakuai3x'},
-            { ID:11,Name:'放大',Icon:'icon-kuozhan'}
-            // { Name:'居中',Icon:'icon-zuoyouduiqi',Handle:null },
+            'html',
+            'bold',
+            'italic', // 斜体
+            'underline',
+            'quote-left',
+            'emoji',
+            'code',
+            'header',
+            'link',
+            'alignment',
+            'list-ol',
+            'list-ul',
+            'picture',// 图片
+            'video'
         ];
         this.Source = source;
         this.Render = source && this.MkIt.render(source);
@@ -55,12 +65,24 @@ export class BeginningEdit{
     get getLastLength(){
         let { end } = this.getSelectionIndex();
         // 不是最后要给字符
-        if(getValue.length > end){
+        if(this.getValue.length > end){
             return false;
         }else{
             return true;
         }
     }
+    // 获取toobar
+    getToolbar(){
+        this.toolBar.forEach(item=>{
+            let component = defineAsyncComponent(()=>
+                import(`../components/Edit/${item}.vue`)
+            )
+            this.toolBarList.push(component)
+        })
+        return this.toolBarList;
+    }
+
+    // 获取光标位置
     getSelectionIndex(){
         // 改变selectionEnd的值即可移动光标
         let start = this.Element.selectionStart;
@@ -76,19 +98,9 @@ export class BeginningEdit{
             isSelection
         }
     }
-    // toolbar的事件
-    handle(toolBar){
-        this.Element.focus();
-        if(toolBar.ID == 1){
-            this.showCode();
-        }else if(toolBar.ID == 2){
-            this.aroundInsert('**','**');
-        }else if(toolBar.ID == 3){
-            this.aroundInsert('*','*');
-        }
-    }
     // 选中的文本前后插入
     aroundInsert(front, behind){
+        this.Element.focus();
         let { start, end,  isSelection } = this.getSelectionIndex();
         if(isSelection){
             let frontText = this.getValue.slice(0, start);
@@ -100,30 +112,33 @@ export class BeginningEdit{
         }
     }
     // 中心插入
-    centreInsert(value){
+    centreInsert(value , MoveSelectionIndexEnd = false){
+        this.Element.focus();
         let { start, end } = this.getSelectionIndex();
         let frontText = this.getValue.slice(0, start);
         let behindText = this.getValue.slice(end);
         let content = `${frontText}${value}${behindText}`;
         this.setValue =  content;
         // 移动光标
-        let totalLength = content.length - behindText.length - Math.floor((value.length / 2));
-        this.Element.selectionEnd = totalLength;
+        if(!MoveSelectionIndexEnd){
+            let totalLength = content.length - behindText.length - Math.floor((value.length / 2));
+            this.Element.selectionEnd = totalLength;
+        }else{
+            this.Element.selectionEnd = frontText.length + value.length;
+        }
     }
     // 插入图片
     insertImage(art = 'alt属性', src = '图片链接'){
+        this.Element.focus();
         let str = `![${art}](${src})`;
         if(this.getLastLength){
             str = '\n' + str;
         }
         this.centreInsert(str);
     }
-    init(element, ShowCodeClick = undefined){
+    init(element){
         this.Element = element;
         this.Element.value = this.Source;
-        if(ShowCodeClick != undefined){
-            this.showCode = ShowCodeClick;
-        }
     }
 
 }

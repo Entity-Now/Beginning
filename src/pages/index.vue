@@ -1,11 +1,11 @@
 <template>
     <div class="container">
-       <BeginningEdit/>
+       <BeginEdit/>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue'
-import BeginningEdit from '../components/BeginningEdit.vue'
+import BeginEdit from '../components/BeginEdit.vue'
 
 
 

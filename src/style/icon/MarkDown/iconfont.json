@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1383",
+      "name": "代码文件",
+      "font_class": "daimawenjian",
+      "unicode": "f01c6",
+      "unicode_decimal": 983494
+    },
+    {
       "icon_id": "658956",
       "name": "图片",
       "font_class": "tupian",
@@ -27,11 +34,25 @@
       "unicode_decimal": 58925
     },
     {
+      "icon_id": "1304965",
+      "name": "Clear-1",
+      "font_class": "15qingkong-1",
+      "unicode": "e680",
+      "unicode_decimal": 59008
+    },
+    {
       "icon_id": "3930588",
       "name": "扩展",
       "font_class": "kuozhan",
       "unicode": "e620",
       "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "4890402",
+      "name": "有序列表",
+      "font_class": "youxuliebiao",
+      "unicode": "e6f0",
+      "unicode_decimal": 59120
     },
     {
       "icon_id": "6127275",
@@ -62,6 +83,13 @@
       "unicode_decimal": 60551
     },
     {
+      "icon_id": "7008927",
+      "name": "emoji",
+      "font_class": "emoji",
+      "unicode": "e6f6",
+      "unicode_decimal": 59126
+    },
+    {
       "icon_id": "11322365",
       "name": "加粗",
       "font_class": "jiacu",
@@ -81,13 +109,6 @@
       "font_class": "quote",
       "unicode": "e60c",
       "unicode_decimal": 58892
-    },
-    {
-      "icon_id": "27556838",
-      "name": "代码块@3x",
-      "font_class": "a-daimakuai3x",
-      "unicode": "e616",
-      "unicode_decimal": 58902
     },
     {
       "icon_id": "34198305",
