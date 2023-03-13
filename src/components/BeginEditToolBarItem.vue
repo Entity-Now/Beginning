@@ -1,9 +1,11 @@
 <template>
     <div class="BeginToolBarItem" v-bind="$attrs">
-        <i :title="name" 
-            class="MarkDownIcon"
-            :class="icon" 
-            @click="$emit('titleClick')"></i>
+        <slot name="title">
+            <i :title="name" 
+                class="MarkDownIcon"
+                :class="icon" 
+                @click="$emit('titleClick')"></i>
+        </slot>
         <Teleport to="body">
             <div class="BeginToolShade"
                 @click="$emit('update:isShowModal',false)"
@@ -39,26 +41,30 @@ const emits = defineEmits(['titleClick','update:isShowModal']);
     justify-content: left;
     align-items: center;
     padding: 0 14px;
+    box-sizing: border-box;
     color: $text-night-primary;
     .BeginToolBarItem{
         position: relative;
-        width: 38px;
-        height: 38px;
-
-        .MarkDownIcon{
-            width: 38px;
-            height: 38px;
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            line-height: 38px;
-            transition: all .5s;
-            &:hover{
-                cursor: pointer;
-                transition: all .5s;
-                color: $text-primary;
-            }
-        }
+        min-width: 21px;
+        height: 21px;
+        margin: 5px 10px 5px 0;
+        text-align: center;
+    }
+}
+.MarkDownIcon{
+    width: 21px;
+    height: 21px;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 21px;
+    transition: all .5s;
+    &:hover{
+        cursor: pointer;
+        transition: all .5s;
+        color: $text-primary;
+    }
+    &::before{
+        text-align: center;
     }
 }
 .BeginToolShade{
@@ -74,10 +80,10 @@ const emits = defineEmits(['titleClick','update:isShowModal']);
     justify-content: start;
 
     .BeginToolBarHover{
-        width: auto;
+        max-width: 90%;
         min-height: 45px;
         border-radius: 3px;
-        margin-top: 30%;
+        margin-top: 20%;
         padding: 7px;
         box-sizing: border-box;
         box-shadow: 0 0 5px 5px $text-second;

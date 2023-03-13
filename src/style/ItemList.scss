@@ -1,0 +1,22 @@
+@import "./public.scss";
+.BeginEdit_ItemList{
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $text-night-primary;
+    .item{
+        line-height: 32px;
+        height: 32px;
+        width: 100%;
+        padding: 0 7px;
+        transition: all .3s;
+        box-sizing: border-box;
+        &:hover{
+            cursor: pointer;
+            border: 1px solid $text-primary;
+            color: $text-primary;
+        }
+    }
+}

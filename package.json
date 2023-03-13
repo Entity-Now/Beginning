@@ -16,6 +16,7 @@
     "github-markdown-css": "^5.2.0",
     "highlight.js": "^11.7.0",
     "markdown-it": "^13.0.1",
+    "markdown-it-container": "^3.0.0",
     "markdown-it-emoji": "^2.0.2",
     "node-sass": "^8.0.0",
     "sirv": "^2.0.2",

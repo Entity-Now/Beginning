@@ -47,6 +47,9 @@ const addLink = ()=>{
     let str = `[${Describe.value}](${Link.value})`;
     Mk.centreInsert(str ,true);
     isShow.value = !isShow.value;
+    Link.value = '';
+    Describe.value = '';
+
 }
 </script>
 <style scoped lang="scss">

@@ -1,7 +1,30 @@
 import { defineAsyncComponent } from 'vue'
 import MarkdownIt  from 'markdown-it'
-import hljs from 'highlight.js'
+import hljs from 'highlight.js/lib/core'
 import emoji from 'markdown-it-emoji/light'
+import languages from '../utils/SustainLanguages.json'
+import MarkdownItContainer from 'markdown-it-container'
+
+import javascript from 'highlight.js/lib/languages/javascript'
+import cpp from 'highlight.js/lib/languages/cpp'
+import csharp from 'highlight.js/lib/languages/csharp'
+import xml from 'highlight.js/lib/languages/xml'
+import json from 'highlight.js/lib/languages/json'
+import css from 'highlight.js/lib/languages/css'
+import sql from 'highlight.js/lib/languages/sql'
+import shell from 'highlight.js/lib/languages/shell'
+import java from 'highlight.js/lib/languages/java'
+import kotlin from 'highlight.js/lib/languages/kotlin'
+hljs.registerLanguage('javascript',javascript);
+hljs.registerLanguage('cpp',cpp);
+hljs.registerLanguage('csharp',csharp);
+hljs.registerLanguage('xml',xml);
+hljs.registerLanguage('json',json);
+hljs.registerLanguage('css',css);
+hljs.registerLanguage('sql',sql);
+hljs.registerLanguage('shell',shell);
+hljs.registerLanguage('java',java);
+hljs.registerLanguage('kotlin',kotlin);
 
 export function CreateHighlight(){
     let md = new MarkdownIt({
@@ -26,6 +49,10 @@ export function CreateHighlight(){
     });
     // use
     md.use(emoji);
+    md.use(MarkdownItContainer);
+    md.use(MarkdownItContainer, 'BeginEdit-left');
+    md.use(MarkdownItContainer, 'BeginEdit-center');
+    md.use(MarkdownItContainer, 'BeginEdit-right');
     return md
 }
 export class BeginningEdit{
@@ -138,7 +165,7 @@ export class BeginningEdit{
     }
     init(element){
         this.Element = element;
-        this.Element.value = this.Source;
+        this.setValue = this.Source;
     }
 
 }

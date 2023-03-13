@@ -24,6 +24,7 @@
 import { ref, shallowRef, onMounted, provide} from 'vue'
 import { BeginningEdit } from '../utils/BeginEditConfig.js'
 import "../style/icon/MarkDownIcon.css"
+import "../style/BeginEdit_Style.scss"
 import 'highlight.js/styles/github-dark-dimmed.css';
 import "github-markdown-css/github-markdown.css"
 
